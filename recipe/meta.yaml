@@ -5,12 +5,11 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/andymccurdy/redis-py/archive/{{ version }}.tar.gz
+  url: https://github.com/redis/redis-py/archive/v{{ version }}.tar.gz
   sha256: a3d3b6e86cc73c253fd5c02d174098abf3fa043dfdcb29689eb928f60a552fd6
 
 build:
   number: 0
-  noarch: python
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
