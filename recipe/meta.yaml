@@ -26,6 +26,7 @@ requirements:
     - hiredis >=3.0.0
     - cryptography >=36.0.1
     - requests >=2.31.0
+    - pyopenssl >=23.2.1
 
 test:
   commands:
