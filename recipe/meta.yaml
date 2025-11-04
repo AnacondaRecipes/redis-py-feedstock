@@ -1,52 +1,57 @@
-{% set version = "5.2.0" %}
+{% set name = "redis-py" %}
+{% set version = "7.0.1" %}
 
 package:
-  name: redis-py
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/redis/redis-py/archive/v{{ version }}.tar.gz
-  sha256: 9be14a8c988a0428c942b8eda201bb2ed2ea6ff7c05a07bbede45b1e1b60d19c
+  url: https://github.com/redis/{{ name }}/archive/v{{ version }}.tar.gz
+  sha256: 81c2b08d544f101c22adc15277704d5dde23dabab91a6bb3b993b0b659d418b2
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: True # [py<38]
+  skip: True # [py<39]
 
 requirements:
   host:
     - python
     - pip
-    - setuptools
-    - wheel
+    - hatchling
   run:
     - python
-    - async-timeout >=4.0.3 # [py<312]
+    - async-timeout >=4.0.3
   run_constrained:
-    - hiredis >=3.0.0
+    - hiredis >=3.2.0
     - cryptography >=36.0.1
+    - pyopenssl >=20.0.1
     - requests >=2.31.0
-    - pyopenssl >=23.2.1
+    - pyjwt >=2.9.0
+    - pybreaker >=1.4.0
 
 test:
   commands:
+    # pytest tests unavailable since 'pybreaker' is unavailable
     - pip check
   imports:
     - redis
     - redis.asyncio
+    - redis.auth
     - redis.commands
     - redis.commands.bf
     - redis.commands.json
     - redis.commands.search
     - redis.commands.timeseries
-    - redis.commands.graph
+    - redis.commands.vectorset
+    - redis.http
+    - redis.multidb
   requires:
     - pip
 
 about:
   home: https://github.com/redis/redis-py/
   license: MIT
-  license_url: https://github.com/redis/redis-py/blob/master/LICENSE
   license_family: MIT
   license_file: LICENSE
   summary: Python client for Redis key-value store
@@ -54,7 +59,6 @@ about:
     The Python interface to the Redis key-value store. Requires a running
     Redis server.
   doc_url: https://pypi.python.org/pypi/redis
-  doc_source_url: https://github.com/redis/redis-py/blob/master/README.md
   dev_url: https://github.com/redis/redis-py/
 extra:
   recipe-maintainers:
