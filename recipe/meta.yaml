@@ -36,19 +36,21 @@ test:
   imports:
     - redis
     - redis.asyncio
+    - redis.auth
     - redis.commands
     - redis.commands.bf
     - redis.commands.json
     - redis.commands.search
     - redis.commands.timeseries
-    - redis.commands.graph
+    - redis.commands.vectorset
+    - redis.http
+    - redis.multidb
   requires:
     - pip
 
 about:
   home: https://github.com/redis/redis-py/
   license: MIT
-  license_url: https://github.com/redis/redis-py/blob/master/LICENSE
   license_family: MIT
   license_file: LICENSE
   summary: Python client for Redis key-value store
@@ -56,7 +58,6 @@ about:
     The Python interface to the Redis key-value store. Requires a running
     Redis server.
   doc_url: https://pypi.python.org/pypi/redis
-  doc_source_url: https://github.com/redis/redis-py/blob/master/README.md
   dev_url: https://github.com/redis/redis-py/
 extra:
   recipe-maintainers:
