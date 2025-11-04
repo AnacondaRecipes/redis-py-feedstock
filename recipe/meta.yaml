@@ -32,6 +32,7 @@ requirements:
 
 test:
   commands:
+    # pytest tests unavailable since 'pybreaker' is unavailable
     - pip check
   imports:
     - redis
