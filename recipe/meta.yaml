@@ -1,18 +1,18 @@
 {% set name = "redis-py" %}
-{% set version = "7.0.1" %}
+{% set version = "8.0.1" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://github.com/redis/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 81c2b08d544f101c22adc15277704d5dde23dabab91a6bb3b993b0b659d418b2
+  url: https://github.com/redis/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: 0132891ac1c75ea1dcf7d7c282de57417edfbc87928868f292559a61b96c6a4b
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: True # [py<39]
+  skip: true # [py<310]
 
 requirements:
   host:
@@ -22,13 +22,25 @@ requirements:
   run:
     - python
     - async-timeout >=4.0.3
+    # import redis.commands.search -> from typing_extensions import Self
+    - typing-extensions  # [py<=310]
   run_constrained:
+    # hiredis
     - hiredis >=3.2.0
+    # xxhash
+    - xxhash >=3.6.0,<3.7.0
+    # ocsp
     - cryptography >=36.0.1
     - pyopenssl >=20.0.1
     - requests >=2.31.0
-    - pyjwt >=2.9.0
+    # jwt
+    - pyjwt >=2.13.0
+    # circuit_breaker
     - pybreaker >=1.4.0
+    # otel
+    - opentelemetry-api >=1.39.1
+    - opentelemetry-sdk >=1.39.1
+    - opentelemetry-exporter-otlp-proto-http >=1.39.1
 
 test:
   commands:
