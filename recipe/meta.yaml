@@ -1,5 +1,5 @@
 {% set name = "redis-py" %}
-{% set version = "8.0.1" %}
+{% set version = "8.1.0" %}
 
 package:
   name: {{ name }}
@@ -7,12 +7,12 @@ package:
 
 source:
   url: https://github.com/redis/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 0132891ac1c75ea1dcf7d7c282de57417edfbc87928868f292559a61b96c6a4b
+  sha256: 1f71accd16bb24383bd89fc213f901c04718d31ade0229f754d7ba37111c0661
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: true # [py<310]
+  skip: true  # [py<310]
 
 requirements:
   host:
@@ -34,13 +34,14 @@ requirements:
     - pyopenssl >=20.0.1
     - requests >=2.31.0
     # jwt
-    - pyjwt >=2.13.0
+    - PyJWT >=2.13.0
     # circuit_breaker
     - pybreaker >=1.4.0
     # otel
     - opentelemetry-api >=1.39.1
     - opentelemetry-sdk >=1.39.1
     - opentelemetry-exporter-otlp-proto-http >=1.39.1
+    - python-xxhash >=3.6.0,<3.7.dev0
 
 test:
   commands:
@@ -70,8 +71,9 @@ about:
   description: |
     The Python interface to the Redis key-value store. Requires a running
     Redis server.
-  doc_url: https://pypi.python.org/pypi/redis
+  doc_url: https://pypi.org/pypi/redis
   dev_url: https://github.com/redis/redis-py/
+
 extra:
   recipe-maintainers:
     - kwilcox
